@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYSLAB AI — Физикалық зертхана</title>
+<meta name="description" content="PHYSLAB AI — интерактивті цифрлық физика зертханасы. Нақты симуляциялар, нақты өлшеулер, нақты есептеулер.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='4' fill='%236ee7ff'/><ellipse cx='16' cy='16' rx='13' ry='5.5' fill='none' stroke='%236ee7ff' stroke-width='1.4' transform='rotate(-24 16 16)'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-loading>
+
+<!-- ══════════ PRELOADER ══════════ -->
+<div id="preloader" aria-hidden="true">
+  <div class="pre-inner">
+    <div class="pre-logo">PHYSLAB&nbsp;<em>AI</em></div>
+    <div class="pre-track"><div id="preBar"></div></div>
+    <div class="pre-sub">Физикалық зертхана жүктелуде</div>
+  </div>
+</div>
+
+<!-- ══════════ CUSTOM CURSOR ══════════ -->
+<div id="cursorDot" aria-hidden="true"></div>
+<div id="cursorRing" aria-hidden="true"><span id="cursorLabel"></span></div>
+
+<!-- ══════════ NAVIGATION ══════════ -->
+<header id="nav">
+  <a class="nav-logo magnetic" href="#home" data-cursor>
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="3.4" fill="#6ee7ff"/><ellipse cx="16" cy="16" rx="13" ry="5.4" fill="none" stroke="#6ee7ff" stroke-width="1.3" transform="rotate(-24 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.4" fill="none" stroke="rgba(110,231,255,.4)" stroke-width="1" transform="rotate(38 16 16)"/></svg>
+    <span>PHYSLAB <em>AI</em></span>
+  </a>
+  <nav class="nav-links" aria-label="Негізгі мәзір">
+    <a class="nav-link magnetic" href="#home">Басты бет</a>
+    <a class="nav-link magnetic" href="#story">Қозғалыс тілі</a>
+    <a class="nav-link magnetic" href="#solar">Күн жүйесі</a>
+    <a class="nav-link magnetic" href="#labs">Зертханалар</a>
+    <a class="nav-link magnetic" href="#about">Жоба туралы</a>
+  </nav>
+  <a href="#labs" class="btn btn-primary btn-sm nav-cta magnetic" data-cursor>Зертханаға кіру</a>
+  <button id="burger" aria-label="Мәзірді ашу" aria-expanded="false"><span></span><span></span></button>
+</header>
+
+<!-- ══════════ MOBILE MENU ══════════ -->
+<div id="mobileMenu" aria-hidden="true">
+  <nav class="mm-links">
+    <a class="mm-link" href="#home"><i>01</i>Басты бет</a>
+    <a class="mm-link" href="#story"><i>02</i>Қозғалыс тілі</a>
+    <a class="mm-link" href="#solar"><i>03</i>Күн жүйесі</a>
+    <a class="mm-link" href="#labs"><i>04</i>Зертханалар</a>
+    <a class="mm-link" href="#about"><i>05</i>Жоба туралы</a>
+  </nav>
+  <div class="mm-foot">PHYSLAB AI — цифрлық физика зертханасы</div>
+</div>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="home" class="hero">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <span class="float-f f1" data-speed="0.10" data-tex="F = ma"></span>
+  <span class="float-f f2" data-speed="-0.14" data-tex="v = v_0 + at"></span>
+  <span class="float-f f3" data-speed="0.18" data-tex="T = 2\pi\sqrt{\frac{l}{g}}"></span>
+  <span class="float-f f4" data-speed="-0.08" data-tex="\lambda = \frac{v}{f}"></span>
+  <span class="float-f f5" data-speed="0.12" data-tex="E = mc^2"></span>
+  <div class="hero-inner container">
+    <div class="hero-overline rv"><span class="pulse-dot"></span>Интерактивті цифрлық зертхана</div>
+    <h1 class="hero-title">
+      <span class="line"><span class="line-in">PHYSLAB</span></span>
+      <span class="line"><span class="line-in grad">AI</span></span>
+    </h1>
+    <div class="hero-sub rv">Физикалық зертхана</div>
+    <p class="hero-desc rv">Физиканы тек оқып қана қоймай, оны <b>қозғалыста</b> көріңіз. Төрт нақты зертхана жұмысы, тірі симуляциялар, бес өлшеу және қателік талдауы — бәрі бір иммерсивті ортада.</p>
+    <div class="hero-cta rv">
+      <a href="#labs" class="btn btn-primary magnetic" data-cursor>Зертханаға кіру<span class="btn-arrow">→</span></a>
+      <a href="#solar" class="btn btn-ghost magnetic" data-cursor>Күн жүйесін зерттеу</a>
+    </div>
+    <div class="hero-stats rv">
+      <div class="hstat"><b>4</b><span>зертхана жұмысы</span></div>
+      <div class="hstat"><b>5×4</b><span>тәжірибелік өлшеу</span></div>
+      <div class="hstat"><b>100%</b><span>нақты физика</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><span>Төмен сырғытыңыз</span><div class="sh-line"><i></i></div></div>
+</section>
+
+<!-- ══════════ STORY: PHYSICS AS LANGUAGE ══════════ -->
+<section id="story">
+  <div class="container">
+    <div class="sec-head rv">
+      <div class="overline">01 · Қозғалыс тілі</div>
+      <h2>Физика — табиғаттың <em class="grad">көрінетін</em> тілі</h2>
+      <p>Траектория, толқын және орбита — механиканың үш ұғымы тірі диаграммалар түрінде.</p>
+    </div>
+
+    <div class="vignette rv">
+      <div class="vig-text">
+        <div class="vig-num">i</div>
+        <h3>Траектория</h3>
+        <p>Лақтырылған дененің әр нүктесінде жылдамдық векторы горизонталь және вертикаль құраушыларға жіктеледі. Горизонталь құраушы тұрақты, ал вертикаль құраушы үдей отырады.</p>
+        <div class="math block" data-tex="x = v_0\,t \qquad y = \frac{g\,t^2}{2}"></div>
+      </div>
+      <div class="vig-canvas"><canvas id="cnvTraj"></canvas></div>
+    </div>
+
+    <div class="vignette rev rv">
+      <div class="vig-text">
+        <div class="vig-num">ii</div>
+        <h3>Толқын</h3>
+        <p>Толқын ұзындығы мен жиіліктің көбейтіндісі — толқынның таралу жылдамдығы. Бұл қатынас толқындар зертханасында нақты өлшенеді.</p>
+        <div class="math block" data-tex="v = \lambda \cdot f"></div>
+      </div>
+      <div class="vig-canvas"><canvas id="cnvWave"></canvas></div>
+    </div>
+
+    <div class="vignette rv">
+      <div class="vig-text">
+        <div class="vig-num">iii</div>
+        <h3>Орбита</h3>
+        <p>Ғаламшарды Күнге тартатын күш — орбитада ұстайтын центрге тартқыш күш. Төмендегі Күн жүйесі моделі осы заңмен қозғалады.</p>
+        <div class="math block" data-tex="F = G\,\frac{m\,M}{r^2}"></div>
+      </div>
+      <div class="vig-canvas"><canvas id="cnvOrbit"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SOLAR SYSTEM ══════════ -->
+<section id="solar">
+  <div class="container">
+    <div class="sec-head rv">
+      <div class="overline">02 · Аспан механикасы</div>
+      <h2>Интерактивті <em class="grad">Күн жүйесі</em></h2>
+      <p>Ғаламшар Кеплер заңына сәйкес қозғалады: Күнге не қандай жақын болса, соғұрлым жылдам айналады. Ғаламшарды басып, жақындатып көріңіз.</p>
+    </div>
+  </div>
+  <div class="solar-stage rv" id="solarStage">
+    <canvas id="solarCanvas"></canvas>
+    <div id="solarTip" aria-hidden="true"></div>
+    <div id="solarInfo" class="card" aria-hidden="true">
+      <button id="siClose" aria-label="Жабу">✕</button>
+      <h3 id="siName">Жер</h3>
+      <dl>
+        <div><dt>Күннен қашықтығы</dt><dd id="siDist">—</dd></div>
+        <div><dt>Айналу периоды</dt><dd id="siPeriod">—</dd></div>
+        <div><dt>Диаметрі</dt><dd id="siDiam">—</dd></div>
+      </dl>
+    </div>
+    <div class="solar-bar card">
+      <label class="sb-speed">
+        <span>Уақыт жылдамдығы</span>
+        <input type="range" id="solarSpeed" min="0.1" max="3" step="0.1" value="1">
+      </label>
+      <div class="sb-btns">
+        <button id="zoomOut" class="btn btn-ghost btn-sm" aria-label="Алыстату">−</button>
+        <button id="zoomIn" class="btn btn-ghost btn-sm" aria-label="Жақындату">＋</button>
+        <button id="solarReset" class="btn btn-ghost btn-sm">Қалпына келтіру</button>
+      </div>
+      <div class="sb-hint">Ғаламшарды басыңыз · доңғалақпен масштабтаңыз</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ LABORATORIES HUB ══════════ -->
+<section id="labs">
+  <div class="container">
+    <div class="sec-head rv">
+      <div class="overline">03 · Зертханалар</div>
+      <h2>Төрт нақты <em class="grad">тәжірибе</em></h2>
+      <p>Әр зертхана — тірі физикалық модель. Параметрді өзгертсеңіз, қозғалыс та өзгереді. Зертхананы таңдап, тәжірибеге кірісіңіз.</p>
+    </div>
+    <div class="lab-list">
+      <article class="lab-row rv" data-lab="1" tabindex="0" role="button" aria-label="Зертхана 1: Теңүдемелі қозғалыс">
+        <span class="lr-num">01</span>
+        <span class="lr-body">
+          <h3>Теңүдемелі қозғалыс</h3>
+          <p>Үдемелі қозғалыстағы жылдамдықты тәжірибелік өлшеу · v = v₀ + at</p>
+        </span>
+        <canvas class="lab-prev" data-prev="1" width="120" height="120"></canvas>
+        <span class="lr-arrow">→</span>
+      </article>
+      <article class="lab-row rv" data-lab="2" tabindex="0" role="button" aria-label="Зертхана 2: Горизонталь лақтырылған дене">
+        <span class="lr-num">02</span>
+        <span class="lr-body">
+          <h3>Горизонталь лақтырылған дене</h3>
+          <p>Парабола траекториясы мен ұшу қашықтығы · L = v₀√(2h/g)</p>
+        </span>
+        <canvas class="lab-prev" data-prev="2" width="120" height="120"></canvas>
+        <span class="lr-arrow">→</span>
+      </article>
+      <article class="lab-row rv" data-lab="3" tabindex="0" role="button" aria-label="Зертхана 3: Маятникпен g анықтау">
+        <span class="lr-num">03</span>
+        <span class="lr-body">
+          <h3>Маятникпен g анықтау</h3>
+          <p>Тербеліс периоды арқылы еркін түсу үдеуі · g = 4π²L/T²</p>
+        </span>
+        <canvas class="lab-prev" data-prev="3" width="120" height="120"></canvas>
+        <span class="lr-arrow">→</span>
+      </article>
+      <article class="lab-row rv" data-lab="4" tabindex="0" role="button" aria-label="Зертхана 4: Беттік толқын жылдамдығын анықтау">
+        <span class="lr-num">04</span>
+        <span class="lr-body">
+          <h3>Беттік толқын жылдамдығын анықтау</h3>
+          <p>Толқын ұзындығы мен жиілік арқылы · v = λf</p>
+        </span>
+        <canvas class="lab-prev" data-prev="4" width="120" height="120"></canvas>
+        <span class="lr-arrow">→</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about">
+  <div class="container">
+    <div class="sec-head rv">
+      <div class="overline">04 · Жоба туралы</div>
+      <h2>Зертхана <em class="grad">философиясы</em></h2>
+    </div>
+    <div class="about-grid">
+      <p class="about-lead rv">PHYSLAB AI — механика тарауының төрт классикалық зертхана жұмысын интерактивті орындауға арналған цифрлық орта. Мұндағы әр нүкте, әр график, әр сан — JavaScript-пен нақты уақытта есептелетін физикалық модельдің нәтижесі.</p>
+      <div class="about-cards">
+        <div class="card rv"><h3>Нақты симуляция</h3><p>Анимациялар емес — дифференциал заңдармен жүретін тірі модельдер. Үдеуді өзгертсеңіз, дене шын мәнінде басқаша үдейді.</p></div>
+        <div class="card rv"><h3>5 өлшеу + қателік</h3><p>Әр зертханада бес рет өлшеу орындалып, орташа мән, абсолюттік және салыстырмалы қателік есептеледі.</p></div>
+        <div class="card rv"><h3>Тірі графиктер</h3><p>v(t) графигі қозғалыс барысында сызылып, өлшеу нүктелері диаграммаға түседі. Ешқандай статикалық сурет жоқ.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container foot-grid">
+    <div class="foot-brand">
+      <span class="nav-logo"><span>PHYSLAB <em>AI</em></span></span>
+      <p>Физикалық зертхана — физиканы қозғалыста үйрену ортасы.</p>
+    </div>
+    <nav class="foot-nav">
+      <a href="#home">Басты бет</a>
+      <a href="#solar">Күн жүйесі</a>
+      <a href="#labs">Зертханалар</a>
+    </nav>
+    <div class="foot-note">© 2025 PHYSLAB AI · Білім беру жобасы</div>
+  </div>
+</footer>
+
+<!-- ══════════════════ LAB SCREENS ══════════════════ -->
+
+<!-- ── LAB 1 ── -->
+<section class="lab-screen" id="lab-1" aria-hidden="true">
+  <div class="lab-wrap">
+    <header class="lab-top">
+      <button class="btn btn-ghost btn-sm lab-back" data-cursor>← Зертханалар</button>
+      <div class="lab-title">
+        <span class="lab-kicker">Зертхана 01 · Кинематика</span>
+        <h2>Теңүдемелі қозғалыс</h2>
+        <p>Тапсырма: дененің <b>t* = 3,0 с</b> мезетіндегі жылдамдығын 5 рет өлшеп, қателікті бағалау.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-theory="t1" data-cursor>Теория</button>
+    </header>
+    <div class="theory card" id="t1">
+      <div class="th-col"><h4>Қозғалыс заңдары</h4>
+        <div class="math block" data-tex="v = v_0 + a\,t"></div>
+        <div class="math block" data-tex="x = v_0\,t + \frac{a\,t^2}{2}"></div>
+      </div>
+      <div class="th-col"><h4>Қателікті есептеу</h4>
+        <div class="math block" data-tex="\bar{v} = \frac{1}{N}\sum_{i=1}^{N} v_i \qquad \Delta v = \frac{1}{N}\sum_{i=1}^{N} |v_i - \bar{v}|"></div>
+        <div class="math block" data-tex="\varepsilon = \frac{\Delta v}{\bar{v}} \cdot 100\% \qquad v = \bar{v} \pm \Delta v"></div>
+      </div>
+      <div class="th-col"><h4>Әдістеме</h4>
+        <p>Дене сарай жолдағы <b>жарқыл аймақтан</b> өткен сәтте «Өлшеу» батырмасын басыңыз — секундомір сіздің реакцияңызбен жұмыс істейді. Әр жүгірісте бір өлшеу. Барлығы — 5 өлшеу.</p>
+      </div>
+    </div>
+    <div class="lab-grid">
+      <div class="lab-stage-col">
+        <div class="card stage-card">
+          <canvas id="sim1"></canvas>
+          <div class="readouts">
+            <div class="chip"><span>t</span><b id="r1t">0,00 с</b></div>
+            <div class="chip"><span>x</span><b id="r1x">0,00 м</b></div>
+            <div class="chip"><span>v</span><b id="r1v">0,00 м/с</b></div>
+          </div>
+          <div class="hint" id="hint1">«Бастау» батырмасын басып, дене жарқыл аймаққа кіргенде «Өлшеу» батырмасын басыңыз (немесе Space пернесі).</div>
+        </div>
+        <div class="card">
+          <h4 class="card-title">v(t) графигі — тірі</h4>
+          <canvas id="plot1" class="plot"></canvas>
+        </div>
+      </div>
+      <aside class="lab-side">
+        <div class="card">
+          <h4 class="card-title">Параметрлер</h4>
+          <label class="ctl"><span class="ctl-head"><span>Бастапқы жылдамдық v₀</span><span class="ctl-val" id="s1v0v">4,0 м/с</span></span>
+            <input type="range" id="s1v0" min="0" max="10" step="0.1" value="4"></label>
+          <label class="ctl"><span class="ctl-head"><span>Үдеу a</span><span class="ctl-val" id="s1av">2,0 м/с²</span></span>
+            <input type="range" id="s1a" min="0.5" max="5" step="0.1" value="2"></label>
+          <div class="ctl-note">Секундомір дәлдігі — сіздің реакция уақытыңыз (шамамен ±0,1 с).</div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="b1start" data-cursor>Бастау</button>
+            <button class="btn btn-warm" id="b1meas" disabled data-cursor>Өлшеу</button>
+            <button class="btn btn-ghost" id="b1clear" data-cursor>Тазалау</button>
+          </div>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеу кестесі <span class="dots" id="prog1"></span></h4>
+          <div class="table-scroll"><table class="mtable">
+            <thead><tr><th>№</th><th>t, с</th><th>v, м/с</th></tr></thead>
+            <tbody id="tbody1"></tbody>
+          </table></div>
+          <dl class="stats">
+            <div><dt>Орташа мән ⟨v⟩</dt><dd id="st1mean">—</dd></div>
+            <div><dt>Абсолюттік қателік Δv</dt><dd id="st1abs">—</dd></div>
+            <div><dt>Салыстырмалы қателік ε</dt><dd id="st1rel">—</dd></div>
+            <div class="result"><dt>Өлшеу нәтижесі</dt><dd id="st1res">—</dd></div>
+            <div class="theory-row"><dt>Теориялық мән</dt><dd id="st1th">—</dd></div>
+          </dl>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеулер диаграммасы</h4>
+          <canvas id="tr1" class="tplot"></canvas>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ── LAB 2 ── -->
+<section class="lab-screen" id="lab-2" aria-hidden="true">
+  <div class="lab-wrap">
+    <header class="lab-top">
+      <button class="btn btn-ghost btn-sm lab-back" data-cursor>← Зертханалар</button>
+      <div class="lab-title">
+        <span class="lab-kicker">Зертхана 02 · Динамика</span>
+        <h2>Горизонталь лақтырылған дене</h2>
+        <p>Тапсырма: дененің <b>ұшу қашықтығын L</b> 5 рет өлшеп, қателікті бағалау.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-theory="t2" data-cursor>Теория</button>
+    </header>
+    <div class="theory card" id="t2">
+      <div class="th-col"><h4>Қозғалыс заңдары</h4>
+        <div class="math block" data-tex="t = \sqrt{\frac{2h}{g}} \qquad L = v_0\,t"></div>
+        <div class="math block" data-tex="x = v_0\,t \qquad y = h - \frac{g\,t^2}{2}"></div>
+      </div>
+      <div class="th-col"><h4>Қателікті есептеу</h4>
+        <div class="math block" data-tex="\bar{L} = \frac{1}{N}\sum_{i=1}^{N} L_i \qquad \Delta L = \frac{1}{N}\sum_{i=1}^{N} |L_i - \bar{L}|"></div>
+        <div class="math block" data-tex="\varepsilon = \frac{\Delta L}{\bar{L}} \cdot 100\% \qquad L = \bar{L} \pm \Delta L"></div>
+      </div>
+      <div class="th-col"><h4>Әдістеме</h4>
+        <p>Параметрлерді тұрақты ұстап, лақтыруды 5 рет қайталаңыз. Дене қонған соң «Өлшеу» батырмасы қону нүктесін сызғышпен (±0,1 м) тіркейді.</p>
+      </div>
+    </div>
+    <div class="lab-grid">
+      <div class="lab-stage-col">
+        <div class="card stage-card">
+          <canvas id="sim2"></canvas>
+          <div class="readouts">
+            <div class="chip"><span>t</span><b id="r2t">0,00 с</b></div>
+            <div class="chip"><span>L</span><b id="r2L">0,00 м</b></div>
+          </div>
+          <div class="hint" id="hint2">Биіктік пен жылдамдықты орнатып, «Лақтыру» батырмасын басыңыз.</div>
+        </div>
+      </div>
+      <aside class="lab-side">
+        <div class="card">
+          <h4 class="card-title">Параметрлер</h4>
+          <label class="ctl"><span class="ctl-head"><span>Биіктік h</span><span class="ctl-val" id="s2hv">20,0 м</span></span>
+            <input type="range" id="s2h" min="5" max="50" step="0.5" value="20"></label>
+          <label class="ctl"><span class="ctl-head"><span>Бастапқы жылдамдық v₀</span><span class="ctl-val" id="s2v0v">8,0 м/с</span></span>
+            <input type="range" id="s2v0" min="2" max="20" step="0.5" value="8"></label>
+          <div class="ctl-note">Сызғыш дәлдігі: ±0,1 м · g = 9,8 м/с²</div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="b2launch" data-cursor>Лақтыру</button>
+            <button class="btn btn-warm" id="b2meas" disabled data-cursor>Өлшеу</button>
+            <button class="btn btn-ghost" id="b2clear" data-cursor>Тазалау</button>
+          </div>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеу кестесі <span class="dots" id="prog2"></span></h4>
+          <div class="table-scroll"><table class="mtable">
+            <thead><tr><th>№</th><th>t, с</th><th>L, м</th></tr></thead>
+            <tbody id="tbody2"></tbody>
+          </table></div>
+          <dl class="stats">
+            <div><dt>Орташа мән ⟨L⟩</dt><dd id="st2mean">—</dd></div>
+            <div><dt>Абсолюттік қателік ΔL</dt><dd id="st2abs">—</dd></div>
+            <div><dt>Салыстырмалы қателік ε</dt><dd id="st2rel">—</dd></div>
+            <div class="result"><dt>Өлшеу нәтижесі</dt><dd id="st2res">—</dd></div>
+            <div class="theory-row"><dt>Теориялық мән</dt><dd id="st2th">—</dd></div>
+          </dl>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеулер диаграммасы</h4>
+          <canvas id="tr2" class="tplot"></canvas>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ── LAB 3 ── -->
+<section class="lab-screen" id="lab-3" aria-hidden="true">
+  <div class="lab-wrap">
+    <header class="lab-top">
+      <button class="btn btn-ghost btn-sm lab-back" data-cursor>← Зертханалар</button>
+      <div class="lab-title">
+        <span class="lab-kicker">Зертхана 03 · Тербелістер</span>
+        <h2>Маятникпен g анықтау</h2>
+        <p>Тапсырма: маятник периодын өлшеп, <b>еркін түсу үдеуін</b> 5 рет есептеу.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-theory="t3" data-cursor>Теория</button>
+    </header>
+    <div class="theory card" id="t3">
+      <div class="th-col"><h4>Тербеліс заңдары</h4>
+        <div class="math block" data-tex="T = 2\pi\sqrt{\frac{L}{g}} \qquad g = \frac{4\pi^2 L}{T^2}"></div>
+        <div class="math block" data-tex="T = \frac{t}{N}"></div>
+      </div>
+      <div class="th-col"><h4>Қателікті есептеу</h4>
+        <div class="math block" data-tex="\bar{g} = \frac{1}{N}\sum_{i=1}^{N} g_i \qquad \Delta g = \frac{1}{N}\sum_{i=1}^{N} |g_i - \bar{g}|"></div>
+        <div class="math block" data-tex="\varepsilon = \frac{\Delta g}{\bar{g}} \cdot 100\% \qquad g = \bar{g} \pm \Delta g"></div>
+      </div>
+      <div class="th-col"><h4>Әдістеме</h4>
+        <p>«Бастау» басылғанда маятник N = 10 рет толық тербеледі, секундомір тоқтайды. Секундомір дәлдігі ±0,2 с. Ұзындықты тұрақты ұстаңыз.</p>
+      </div>
+    </div>
+    <div class="lab-grid">
+      <div class="lab-stage-col">
+        <div class="card stage-card">
+          <canvas id="sim3"></canvas>
+          <div class="readouts">
+            <div class="chip"><span>Тербеліс</span><b id="r3n">0 / 10</b></div>
+            <div class="chip"><span>Секундомір</span><b id="r3t">0,00 с</b></div>
+          </div>
+          <div class="hint" id="hint3">Жіп ұзындығын орнатып, «Бастау» батырмасын басыңыз — 10 тербеліс автоматты өлшенеді.</div>
+        </div>
+      </div>
+      <aside class="lab-side">
+        <div class="card">
+          <h4 class="card-title">Параметрлер</h4>
+          <label class="ctl"><span class="ctl-head"><span>Жіп ұзындығы L</span><span class="ctl-val" id="s3Lv">1,00 м</span></span>
+            <input type="range" id="s3L" min="0.25" max="2" step="0.05" value="1"></label>
+          <div class="ctl-note">Тербеліс саны: N = 10 · Секундомір: ±0,2 с</div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="b3start" data-cursor>Бастау</button>
+            <button class="btn btn-ghost" id="b3clear" data-cursor>Тазалау</button>
+          </div>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеу кестесі <span class="dots" id="prog3"></span></h4>
+          <div class="table-scroll"><table class="mtable">
+            <thead><tr><th>№</th><th>L, м</th><th>t, с</th><th>T, с</th><th>g, м/с²</th></tr></thead>
+            <tbody id="tbody3"></tbody>
+          </table></div>
+          <dl class="stats">
+            <div><dt>Орташа мән ⟨g⟩</dt><dd id="st3mean">—</dd></div>
+            <div><dt>Абсолюттік қателік Δg</dt><dd id="st3abs">—</dd></div>
+            <div><dt>Салыстырмалы қателік ε</dt><dd id="st3rel">—</dd></div>
+            <div class="result"><dt>Өлшеу нәтижесі</dt><dd id="st3res">—</dd></div>
+            <div class="theory-row"><dt>Эталон мән</dt><dd id="st3th">9,80 м/с²</dd></div>
+          </dl>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеулер диаграммасы</h4>
+          <canvas id="tr3" class="tplot"></canvas>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ── LAB 4 ── -->
+<section class="lab-screen" id="lab-4" aria-hidden="true">
+  <div class="lab-wrap">
+    <header class="lab-top">
+      <button class="btn btn-ghost btn-sm lab-back" data-cursor>← Зертханалар</button>
+      <div class="lab-title">
+        <span class="lab-kicker">Зертхана 04 · Толқындар</span>
+        <h2>Беттік толқын жылдамдығын анықтау</h2>
+        <p>Тапсырма: толқын ұзындығын өлшеп, <b>толқын жылдамдығын</b> 5 рет есептеу.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-theory="t4" data-cursor>Теория</button>
+    </header>
+    <div class="theory card" id="t4">
+      <div class="th-col"><h4>Толқын заңдары</h4>
+        <div class="math block" data-tex="v = \lambda \cdot f \qquad \lambda = \frac{v}{f}"></div>
+        <div class="math block" data-tex="v = \sqrt{g\,h}"></div>
+      </div>
+      <div class="th-col"><h4>Қателікті есептеу</h4>
+        <div class="math block" data-tex="\bar{v} = \frac{1}{N}\sum_{i=1}^{N} v_i \qquad \Delta v = \frac{1}{N}\sum_{i=1}^{N} |v_i - \bar{v}|"></div>
+        <div class="math block" data-tex="\varepsilon = \frac{\Delta v}{\bar{v}} \cdot 100\% \qquad v = \bar{v} \pm \Delta v"></div>
+      </div>
+      <div class="th-col"><h4>Әдістеме</h4>
+        <p>Тереңдік тұрақты қалып, әр өлшеуде вибратор жиілігін өзгертіңіз. Толқын ұзындығы сызғышпен ±3 мм дәлдікпен өлшенеді.</p>
+      </div>
+    </div>
+    <div class="lab-grid">
+      <div class="lab-stage-col">
+        <div class="card stage-card">
+          <canvas id="sim4"></canvas>
+          <div class="readouts">
+            <div class="chip"><span>f</span><b id="r4f">2,0 Гц</b></div>
+            <div class="chip"><span>λ (теория)</span><b id="r4l">— м</b></div>
+            <div class="chip"><span>v (теория)</span><b id="r4v">— м/с</b></div>
+          </div>
+          <div class="hint" id="hint4">Жиілікті өзгертіп отырып, «Өлшеу» батырмасын 5 рет басыңыз.</div>
+        </div>
+      </div>
+      <aside class="lab-side">
+        <div class="card">
+          <h4 class="card-title">Параметрлер</h4>
+          <label class="ctl"><span class="ctl-head"><span>Вибратор жиілігі f</span><span class="ctl-val" id="s4fv">2,0 Гц</span></span>
+            <input type="range" id="s4f" min="1" max="5" step="0.1" value="2"></label>
+          <label class="ctl"><span class="ctl-head"><span>Су тереңдігі h</span><span class="ctl-val" id="s4hv">20 мм</span></span>
+            <input type="range" id="s4h" min="5" max="50" step="1" value="20"></label>
+          <div class="ctl-note">Сызғыш дәлдігі: ±3 мм · Таяз су толқыны: v = √(gh)</div>
+          <div class="btn-row">
+            <button class="btn btn-warm" id="b4meas" data-cursor>Өлшеу</button>
+            <button class="btn btn-ghost" id="b4clear" data-cursor>Тазалау</button>
+          </div>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеу кестесі <span class="dots" id="prog4"></span></h4>
+          <div class="table-scroll"><table class="mtable">
+            <thead><tr><th>№</th><th>f, Гц</th><th>λ, м</th><th>v, м/с</th></tr></thead>
+            <tbody id="tbody4"></tbody>
+          </table></div>
+          <dl class="stats">
+            <div><dt>Орташа мән ⟨v⟩</dt><dd id="st4mean">—</dd></div>
+            <div><dt>Абсолюттік қателік Δv</dt><dd id="st4abs">—</dd></div>
+            <div><dt>Салыстырмалы қателік ε</dt><dd id="st4rel">—</dd></div>
+            <div class="result"><dt>Өлшеу нәтижесі</dt><dd id="st4res">—</dd></div>
+            <div class="theory-row"><dt>Теориялық мән</dt><dd id="st4th">—</dd></div>
+          </dl>
+        </div>
+        <div class="card">
+          <h4 class="card-title">Өлшеулер диаграммасы</h4>
+          <canvas id="tr4" class="tplot"></canvas>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
